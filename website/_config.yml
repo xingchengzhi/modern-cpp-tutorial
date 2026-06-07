@@ -69,3 +69,7 @@ marked:
   breaks: false
   smartLists: true
   smartypants: false
+  # hexo-renderer-marked 6+ prepends the site root to relative image paths
+  # by default, which turns the book's ../../assets/... figures into a broken
+  # /../../assets/... absolute path. Keep the original relative paths.
+  prependRoot: false
