@@ -51,11 +51,11 @@ Also, the author would like to encourage that readers should be able to use mode
 
 ## Code
 
-Each chapter of this book has a lot of code. If you encounter problems when writing your own code with the introductory features of the book, you might as well read the source code attached to the book. You can find the book [here](../../code). All the code is organized by chapter, the folder name is the chapter number.
+Each chapter of this book has a lot of code. If you encounter problems when writing your own code with the introductory features of the book, you might as well read the source code attached to the book. You can find the book [here](https://github.com/changkun/modern-cpp-tutorial/tree/master/code). All the code is organized by chapter, the folder name is the chapter number.
 
 ## Exercises
 
-There are few exercises At the end of each chapter of the book. It is for testing whether you can use the knowledge points in the current chapter. You can find the possible answer to the problem from [here](../../exercise). The folder name is the chapter number.
+There are few exercises At the end of each chapter of the book. It is for testing whether you can use the knowledge points in the current chapter. You can find the possible answer to the problem from [here](https://github.com/changkun/modern-cpp-tutorial/tree/master/exercises). The folder name is the chapter number.
 
 [Table of Content](./toc.md) | [Next Chapter: Towards Modern C++](./01-intro.md)
 

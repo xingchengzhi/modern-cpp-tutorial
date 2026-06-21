@@ -29,4 +29,11 @@ for index, source in enumerate(source_dir):
                     if any(keyword in line for keyword in ignores):
                         continue
                     else:
-                        output_file.write(re.sub(r'(./)(.*?)(.md)', r'../\2/index.html', line))
+                        # Rewrite relative cross-chapter links `](./NN-name.md)`
+                        # (optionally with a #anchor) to the website's
+                        # `](../NN-name/index.html)` form. The pattern is anchored
+                        # to the `](./…md)` link syntax with a simple filename so it
+                        # cannot corrupt external URLs — the previous loose regex
+                        # `(./)(.*?)(.md)` matched any `:/ … md` span and mangled
+                        # links like `#cmdoption-…` into `https..//…`.
+                        output_file.write(re.sub(r'\]\(\./([\w-]+)\.md(#[^)]*)?\)', r'](../\1/index.html\2)', line))
