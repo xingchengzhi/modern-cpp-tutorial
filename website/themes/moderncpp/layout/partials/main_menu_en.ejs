@@ -22,6 +22,19 @@
 </ul>
 </li>
 
+<%
+  // Switch to the SAME page in Chinese where one exists (book chapter, about
+  // page), otherwise fall back to the Chinese landing.
+  var _p = page.path || '';
+  var zhHref;
+  if (_p.indexOf('en-us/') !== -1) {
+    zhHref = url_for('/' + _p.replace('en-us/', 'zh-cn/').replace(/index\.html$/, ''));
+  } else if (_p.indexOf('/about/en/') !== -1) {
+    zhHref = url_for('/' + _p.replace('/about/en/', '/about/'));
+  } else {
+    zhHref = url_for('/modern-cpp/');
+  }
+%>
 <li class="nav-dropdown-container language">
 <a class="nav-link">
     <span style="content: url(/modern-cpp/assets/lang/en.svg); width: 15px; height: 15px; margin-right: 5px; vertical-align: middle; margin-bottom: 2px;"></span>
@@ -29,7 +42,7 @@
 </a><span class="arrow"></span>
 <ul class="nav-dropdown">
     <li><ul>
-        <li><a class="nav-link" target="_blank" href="/modern-cpp/zh-cn/00-preface/">
+        <li><a class="nav-link" href="<%- zhHref %>" onclick="try{localStorage.setItem('mcpp-lang','zh')}catch(e){}">
         <span style="content: url(/modern-cpp/assets/lang/cn.svg); width: 15px; height: 15px; margin-right: 5px; vertical-align: middle; margin-bottom: 2px;"></span>
         中文
     </a></li>

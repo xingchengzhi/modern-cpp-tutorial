@@ -22,6 +22,19 @@
   </ul>
 </li>
 
+<%
+  // Switch to the SAME page in English where one exists (book chapter, about
+  // page), otherwise fall back to the English landing.
+  var _p = page.path || '';
+  var enHref;
+  if (_p.indexOf('zh-cn/') !== -1) {
+    enHref = url_for('/' + _p.replace('zh-cn/', 'en-us/').replace(/index\.html$/, ''));
+  } else if (_p.indexOf('/about/') !== -1) {
+    enHref = url_for('/' + _p.replace('/about/', '/about/en/'));
+  } else {
+    enHref = url_for('/modern-cpp/en/');
+  }
+%>
 <li class="nav-dropdown-container language">
   <a class="nav-link">
     <span style="content: url(/modern-cpp/assets/lang/cn.svg); width: 15px; height: 15px; margin-right: 5px; vertical-align: middle; margin-bottom: 2px;"></span>
@@ -29,7 +42,7 @@
   </a><span class="arrow"></span>
   <ul class="nav-dropdown">
       <li><ul>
-      <li><a class="nav-link" target="_blank" href="/modern-cpp/en-us/00-preface/">
+      <li><a class="nav-link" href="<%- enHref %>" onclick="try{localStorage.setItem('mcpp-lang','en')}catch(e){}">
         <span style="content: url(/modern-cpp/assets/lang/en.svg); width: 15px; height: 15px; margin-right: 5px; vertical-align: middle; margin-bottom: 2px;"></span>
         English
       </a></li>
