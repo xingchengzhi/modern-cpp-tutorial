@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="<%- page.type == 'book-en-us' ? 'en' : 'zh-CN' %>">
   <head>
-    <title><%- page.title ? page.title : '' %> 现代 C++ 教程: 高速上手 C++11 到 C++26 - Modern C++ Tutorial: C++11 to C++26 On the Fly</title>
+    <title><%- page.title ? page.title + ' - ' : '' %><%- page.type == 'book-en-us' ? 'Modern C++ Tutorial: C++11 to C++26 On the Fly' : '现代 C++ 教程: 高速上手 C++11 到 C++26' %></title>
     <meta charset="utf-8">
     <meta name="description" content="<%- theme.site_description %>">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
