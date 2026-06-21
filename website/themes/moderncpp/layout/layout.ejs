@@ -1,10 +1,28 @@
-<% var isIndex = page.layout === 'index' || page.path === 'index.html' %>
-
+<%
+  var isEn = page.type == 'book-en-us' || page.type == 'about-en';
+  var isIndex = page.layout === 'index' || page.path === 'index.html';
+%>
 <!DOCTYPE html>
-<html lang="<%- page.type == 'book-en-us' ? 'en' : 'zh-CN' %>">
+<html lang="<%- isEn ? 'en' : 'zh-CN' %>">
   <head>
-    <title><%- page.title ? page.title + ' - ' : '' %><%- page.type == 'book-en-us' ? 'Modern C++ Tutorial: C++11 to C++26 On the Fly' : '现代 C++ 教程: 高速上手 C++11 到 C++26' %></title>
     <meta charset="utf-8">
+    <% if (isIndex && !isEn) { %>
+    <!-- Browser-language auto-routing: send non-Chinese browsers (or anyone
+         whose remembered choice is English) to the English landing. A stored
+         'zh' preference is honored and never bounced. Runs before any external
+         script so the redirect is not blocked on a network download. -->
+    <script>
+    (function () {
+      var pref = null;
+      try { pref = localStorage.getItem('mcpp-lang'); } catch (e) {}
+      if (pref === 'zh') return;
+      var enBrowser = (navigator.language || navigator.userLanguage || 'en')
+        .toLowerCase().indexOf('zh') !== 0;
+      if (pref === 'en' || enBrowser) { location.replace('/modern-cpp/en/'); }
+    })();
+    </script>
+    <% } %>
+    <title><%- page.title ? page.title + ' - ' : '' %><%- isEn ? 'Modern C++ Tutorial: C++11 to C++26 On the Fly' : '现代 C++ 教程: 高速上手 C++11 到 C++26' %></title>
     <meta name="description" content="<%- theme.site_description %>">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="shortcut icon" type="image/x-icon" href="/modern-cpp/assets/cover-2nd.png">
@@ -23,7 +41,7 @@
     <script async src="//changkun.de/urlstat/client.js"></script>
   </head>
   <body class="<%- isIndex ? '' : 'docs' -%>">
-    <% if (page.type == 'book-en-us') { %>
+    <% if (isEn) { %>
       <div id="mobile-bar" data-bg-text="Modern C++ Tutorial" <%- isIndex ? 'class="top"' : '' %>>
         <a class="menu-button"></a>
         <a class="logo" href="/modern-cpp/"></a>

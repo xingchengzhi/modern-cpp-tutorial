@@ -14,12 +14,12 @@
 
 <div id="lang-switch">
   <% if (isEn) { %>
-    <a class="lang-btn" href="<%- url_for("/modern-cpp/") %>">
-      <span class="flag" style="content: url(/modern-cpp/assets/lang/cn.svg);"></span>中文
+    <a class="lang-btn" href="<%- url_for("/modern-cpp/") %>" onclick="try{localStorage.setItem('mcpp-lang','zh')}catch(e){}">
+      <span class="flag" style="content: url(/modern-cpp/assets/lang/cn.svg); display: inline-block; width: 15px; height: 15px; vertical-align: middle; margin-right: 6px; margin-bottom: 2px;"></span>中文
     </a>
   <% } else { %>
-    <a class="lang-btn" href="<%- url_for("/modern-cpp/en/") %>">
-      <span class="flag" style="content: url(/modern-cpp/assets/lang/en.svg);"></span>English
+    <a class="lang-btn" href="<%- url_for("/modern-cpp/en/") %>" onclick="try{localStorage.setItem('mcpp-lang','en')}catch(e){}">
+      <span class="flag" style="content: url(/modern-cpp/assets/lang/en.svg); display: inline-block; width: 15px; height: 15px; vertical-align: middle; margin-right: 6px; margin-bottom: 2px;"></span>English
     </a>
   <% } %>
 </div>
