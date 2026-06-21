@@ -1,9 +1,10 @@
+<% var isEn = page.type == 'book-en-us' || page.type == 'about-en' %>
 <% if (page.type) { %>
   <%- partial('partials/sidebar', { type: page.type, index: page.index }) %>
 <% } else { %>
   <div class="sidebar">
     <ul class="main-menu">
-        <% if (page.type == 'book-en-us') { %>
+        <% if (isEn) { %>
           <%- partial('partials/main_menu_en', { context: 'nav' }) %>
         <% } else {%>
           <%- partial('partials/main_menu', { context: 'nav' }) %>
@@ -22,14 +23,14 @@
     <% }) %>
   </div>
 
-  <% if (page.type == 'book-en-us') { %>
+  <% if (isEn) { %>
     <div class="footer">
         <p>
           <a href="https://changkun.de">Changkun Ou</a> &copy; 2016-<%- new Date().getFullYear() %>.
           The book is licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0</a>, code is open sourced under the <a href="https://opensource.org/licenses/MIT" target="_blank">MIT</a> License. </a>
         </p>
         <p>
-          If you like the book, you could <a href="/modern-cpp/about/donate.html">donate the author</a>.
+          If you like the book, you could <a href="/modern-cpp/about/en/donate.html">donate the author</a>.
         </p>
       </div>
   <% } else {%>

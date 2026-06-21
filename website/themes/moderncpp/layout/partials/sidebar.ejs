@@ -1,7 +1,8 @@
+<% var isEn = page.type == 'book-en-us' || page.type == 'about-en' %>
 <div class="sidebar">
   <div class="sidebar-inner">
     <ul class="main-menu">
-      <% if (page.type == 'book-en-us') { %>
+      <% if (isEn) { %>
         <%- partial('partials/main_menu_en', { context: 'nav' }) %>
       <% } else {%>
         <%- partial('partials/main_menu', { context: 'nav' }) %>
@@ -9,7 +10,7 @@
     </ul>
     <div class="list">
       <h2>
-        <% if (page.type == 'book-en-us') { %>
+        <% if (isEn) { %>
           <%-
           type === 'exercises'
               ? 'Exercises'
@@ -17,9 +18,9 @@
               ? 'Main'
               : type === 'answers'
                   ? 'Reference Answers'
-                  : type === 'about'
+                  : type === 'about' || type === 'about-en'
                   ? 'About'
-                  : (type.charAt(0).toUpperCase() + type.slice(1)) 
+                  : (type.charAt(0).toUpperCase() + type.slice(1))
           %>
         <% } else {%>
           <%-
