@@ -1,6 +1,39 @@
 <%
   var isEn = page.type == 'book-en-us' || page.type == 'about-en';
   var isIndex = page.layout === 'index' || page.path === 'index.html';
+
+  // Absolute URLs for this page and its other-language twin. Book chapters and
+  // About pages have a same-path twin; everything else maps to the landing.
+  // Shared with the visible language switcher so the two never drift.
+  var SITE = 'https://changkun.de';
+  var ROOT = '/modern-cpp/';
+  var _p = page.path || '';
+  var zhUrl, enUrl;
+  if (_p.indexOf('zh-cn/') !== -1) {
+    zhUrl = SITE + '/' + _p.replace(/index\.html$/, '');
+    enUrl = SITE + '/' + _p.replace('zh-cn/', 'en-us/').replace(/index\.html$/, '');
+  } else if (_p.indexOf('en-us/') !== -1) {
+    enUrl = SITE + '/' + _p.replace(/index\.html$/, '');
+    zhUrl = SITE + '/' + _p.replace('en-us/', 'zh-cn/').replace(/index\.html$/, '');
+  } else if (_p.indexOf('/about/en/') !== -1) {
+    enUrl = SITE + '/' + _p.replace(/index\.html$/, '');
+    zhUrl = SITE + '/' + _p.replace('/about/en/', '/about/');
+  } else if (_p.indexOf('/about/') !== -1) {
+    zhUrl = SITE + '/' + _p.replace(/index\.html$/, '');
+    enUrl = SITE + '/' + _p.replace('/about/', '/about/en/');
+  } else {
+    zhUrl = SITE + ROOT;
+    enUrl = SITE + ROOT + 'en/';
+  }
+  var canonicalUrl = isEn ? enUrl : zhUrl;
+
+  var siteName = isEn ? 'Modern C++ Tutorial' : '现代 C++ 教程';
+  var siteTagline = isEn ? 'Modern C++ Tutorial: C++11 to C++26 On the Fly' : '现代 C++ 教程: 高速上手 C++11 到 C++26';
+  var pageTitle = (page.title ? page.title + ' - ' : '') + siteTagline;
+  var pageDesc = page.description ? page.description : (isEn
+    ? 'A fast, comprehensive guide to the features of modern C++, from C++11 through C++26.'
+    : '高速上手现代 C++ 特性的全面教程，覆盖 C++11 到 C++26。');
+  var ogImage = SITE + ROOT + 'assets/' + (isEn ? 'cover-2nd-en.png' : 'cover-2nd.png');
 %>
 <!DOCTYPE html>
 <html lang="<%- isEn ? 'en' : 'zh-CN' %>">
@@ -22,12 +55,32 @@
     })();
     </script>
     <% } %>
-    <title><%- page.title ? page.title + ' - ' : '' %><%- isEn ? 'Modern C++ Tutorial: C++11 to C++26 On the Fly' : '现代 C++ 教程: 高速上手 C++11 到 C++26' %></title>
-    <meta name="description" content="<%- theme.site_description %>">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="shortcut icon" type="image/x-icon" href="/modern-cpp/assets/cover-2nd.png">
+    <title><%- pageTitle %></title>
+    <meta name="description" content="<%- pageDesc %>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="canonical" href="<%- canonicalUrl %>">
+    <link rel="alternate" hreflang="zh-CN" href="<%- zhUrl %>">
+    <link rel="alternate" hreflang="en" href="<%- enUrl %>">
+    <link rel="alternate" hreflang="x-default" href="<%- SITE + ROOT %>">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/modern-cpp/assets/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/modern-cpp/assets/apple-touch-icon.png">
     <meta name="msapplication-TileColor" content="#7e2d36">
     <meta name="theme-color" content="#7e2d36">
+
+    <meta property="og:type" content="<%- isIndex ? 'website' : 'article' %>">
+    <meta property="og:site_name" content="<%- siteName %>">
+    <meta property="og:title" content="<%- pageTitle %>">
+    <meta property="og:description" content="<%- pageDesc %>">
+    <meta property="og:url" content="<%- canonicalUrl %>">
+    <meta property="og:image" content="<%- ogImage %>">
+    <meta property="og:locale" content="<%- isEn ? 'en_US' : 'zh_CN' %>">
+    <meta property="og:locale:alternate" content="<%- isEn ? 'zh_CN' : 'en_US' %>">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%- pageTitle %>">
+    <meta name="twitter:description" content="<%- pageDesc %>">
+    <meta name="twitter:image" content="<%- ogImage %>">
 
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600|Roboto Mono' rel='stylesheet' type='text/css'>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
